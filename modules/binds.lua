@@ -164,32 +164,44 @@ local globalAppBinds = {
 	{ mod = subMod, key = { "SHIFT + mouse:272" }, dispatch = hl.dsp.window.resize(), opts = { mouse = true } },
 }
 
+-- function to merge lists
+local function merge_into(first, second)
+	for index, item in pairs(second) do
+		first[index] = item
+	end
+	return first
+end
+
 -- Workspace switch keys
 for _, bind in ipairs(globalAppBinds) do
+	-- Mod specified or default modifier
 	local modBind = bind.mod or mainMod
 	local command
+	-- If the dispatcher isnt a string evaluate
+	-- it as a command
 	if type(bind.dispatch) ~= "string" then
 		command = bind.dispatch
 	else
 		command = hl.dsp.exec_cmd(bind.dispatch)
 	end
+	-- If there are options then apply them
 	local opts = {}
 	if bind.opts then
 		opts = bind.opts
 	end
+	-- If there is a specific key for that device then
+	-- bind it, else bind the default key
 	if bind.key[keybindIndex] then
 		hl.bind(modBind .. bind.key[keybindIndex], command, opts)
 	else
 		hl.bind(modBind .. bind.key[1], command)
 	end
-	-- If not on hackstation
-	-- Bind all keys for corne if it connects because theres no number row
+	-- If corne keys not being bound by default, then bind them just in case
 	if keybindIndex ~= 1 then
-		hl.bind(
-			"SUPER + " .. bind.key[1],
-			command,
-			{ device = { inclusive = true, list = { "zmk-project-corne-keyboard" } } }
-		)
+		local deviceSpecifier = { device = { inclusive = true, list = { "zmk-project-corne-keyboard" } } }
+		-- Apply options so that dragging windows and stuff works
+		local corneOptions = merge_into(opts, deviceSpecifier)
+		hl.bind("SUPER + " .. bind.key[1], command, corneOptions)
 	end
 end
 
@@ -205,8 +217,8 @@ for index, bind in ipairs(keyboardSplit) do
 	hl.bind(mainMod .. "SHIFT + " .. bind, hl.dsp.window.move({ workspace = index, follow = false }))
 end
 
--- Workspace binds for corne in particular
-if Hostname ~= "HACKSTATION" then
+-- If corne keys not being bound
+if keybindIndex ~= 1 then
 	local corneKeyboardSplit = {}
 
 	for char in corneKeyboardString:gmatch(".") do
