@@ -41,6 +41,7 @@
         grimblast
         wpaperd
         syncthing
+        hyprlock
         gotify-desktop
         wayvnc
         quickshell
