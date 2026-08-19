@@ -37,7 +37,6 @@
         kitty
         firefox
         nemo
-        wlogout
         grimblast
         wpaperd
         syncthing

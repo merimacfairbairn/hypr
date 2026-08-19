@@ -147,7 +147,7 @@ local globalAppBinds = {
 	},
 
 	-- Logout menu
-	{ key = { "a", "e" }, dispatch = "wlogout -b 5" },
+	{ key = { "a", "e" }, dispatch = "quickshell ipc call root openLogoutMenu" },
 
 	-- Screenshot
 	{ mod = subMod, key = { "SHIFT + s" }, dispatch = "grimblast copy area" },
