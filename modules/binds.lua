@@ -47,7 +47,7 @@ local keybindIndex = 1
 local recordingMode = 0
 
 -- Set different modifiers on laptop
-if Hostname == "mobile02" then
+if Hostname == "mobile02" or Hostname == "mobile03" then
 	mainMod = "ALT + "
 	subMod = "SUPER + "
 	keyboardString = "1234567890"
