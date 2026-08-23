@@ -26,6 +26,17 @@ local function notif(text, timeout, icon)
 	})
 end
 
+-- function to merge lists
+local function merge_into(first, second)
+	local combined = {}
+
+	-- Look at me using lua im so good at this
+	table.move(first, 1, #first, 1, combined)
+	table.move(second, 1, #second, #first + 1, combined)
+
+	return combined
+end
+
 local corneKeyboardString = "qwertyuiop"
 
 -- Set modifier keys
@@ -101,15 +112,13 @@ local globalAppBinds = {
 		key = { "h" },
 		dispatch = function()
 			local pos = normalise_current_window_pos()
-			if pos then
-				-- 9 derived from 5 gap plus 3 border (8), so first pixel of window is 9
-				if pos == 9 then
-					-- If first window, then move to monitor to the left
-					hl.dispatch(hl.dsp.focus({ monitor = "left" }))
-				else
-					-- If not the first window then go to the column to the left
-					hl.dispatch(hl.dsp.layout("move -col"))
-				end
+			-- 9 derived from 5 gap plus 3 border (8), so first pixel of window is 9
+			if pos and pos == 9 then
+				-- If first window, then move to monitor to the left
+				hl.dispatch(hl.dsp.focus({ monitor = "left" }))
+			else
+				-- If not the first window then go to the column to the left
+				hl.dispatch(hl.dsp.layout("move -col"))
 			end
 		end,
 	},
@@ -164,32 +173,28 @@ local globalAppBinds = {
 	{ mod = subMod, key = { "SHIFT + mouse:272" }, dispatch = hl.dsp.window.resize(), opts = { mouse = true } },
 }
 
--- function to merge lists
-local function merge_into(first, second)
-	for index, item in pairs(second) do
-		first[index] = item
-	end
-	return first
-end
-
 -- Workspace switch keys
 for _, bind in ipairs(globalAppBinds) do
 	-- Mod specified or default modifier
 	local modBind = bind.mod or mainMod
 	local command
+
 	-- If the dispatcher isnt a string evaluate
 	-- it as a command
 	if type(bind.dispatch) ~= "string" then
 		command = bind.dispatch
 	else
+		-- If it is a string then wrap it in exec_cmd
 		command = hl.dsp.exec_cmd(bind.dispatch)
 	end
+
 	-- If there are options then apply them
 	local opts = {}
 	if bind.opts then
 		opts = bind.opts
 	end
-	-- If there is a specific key for that device then
+
+	-- If there is a specific key for that keybindIndex then
 	-- bind it, else bind the default key
 	if bind.key[keybindIndex] then
 		hl.bind(modBind .. bind.key[keybindIndex], command, opts)
@@ -213,7 +218,10 @@ for char in keyboardString:gmatch(".") do
 end
 
 for index, bind in ipairs(keyboardSplit) do
+	-- Focus workspace index
 	hl.bind(mainMod .. bind, hl.dsp.focus({ workspace = index }))
+
+	-- Move to workspace no follow
 	hl.bind(mainMod .. "SHIFT + " .. bind, hl.dsp.window.move({ workspace = index, follow = false }))
 end
 
