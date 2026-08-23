@@ -73,13 +73,24 @@ hl.window_rule({
 	no_anim = true,
 })
 
+local musicSides = 400
+local musicBottom = 400
+
+if Hostname == "mobile02" then
+	musicSides = 300
+	musicBottom = 300
+elseif Hostname == "mobile03" then
+	musicSides = 200
+	musicBottom = 250
+end
+
 -- Define gaps for music workspace
 hl.workspace_rule({
 	workspace = "special:music",
 	gaps_out = {
-		left = 400,
-		right = 400,
-		bottom = 400,
+		left = musicSides,
+		right = musicSides,
+		bottom = musicSides,
 	},
 	animation = "slidefadevert",
 })
