@@ -24,7 +24,7 @@ hl.config({
 	},
 })
 
-if Hostname == "mobile02" then
+if Hostname == "mobile02" or Hostname == "mobile03" then
 	hl.config({
 		input = { -- If on laptop make caps the escape key but make it be capslock when shift caps is pressed
 			kb_options = "caps:escape_shifted_capslock",
@@ -34,10 +34,10 @@ elseif Hostname == "HACKSTATION" then
 	hl.device({
 		name = "weylus-stylus",
 		left_handed = false,
-		output = "DP-1"
+		output = "DP-1",
 	})
 	hl.device({
 		name = "weylus-touch",
-		output = "DP-1"
+		output = "DP-1",
 	})
 end
