@@ -90,7 +90,7 @@ hl.workspace_rule({
 	gaps_out = {
 		left = musicSides,
 		right = musicSides,
-		bottom = musicSides,
+		bottom = musicBottom,
 	},
 	animation = "slidefadevert",
 })

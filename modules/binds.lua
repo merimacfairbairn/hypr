@@ -46,8 +46,8 @@ local keyboardString = corneKeyboardString
 local keybindIndex = 1
 local recordingMode = 0
 
--- Set different modifiers on laptop
-if Hostname == "mobile02" or Hostname == "mobile03" then
+-- Set different modifiers on laptops
+if string.find(Hostname, "mobile") ~= nil then
 	mainMod = "ALT + "
 	subMod = "SUPER + "
 	keyboardString = "1234567890"
@@ -201,12 +201,17 @@ for _, bind in ipairs(globalAppBinds) do
 	else
 		hl.bind(modBind .. bind.key[1], command)
 	end
+
 	-- If corne keys not being bound by default, then bind them just in case
 	if keybindIndex ~= 1 then
 		local deviceSpecifier = { device = { inclusive = true, list = { "zmk-project-corne-keyboard" } } }
 		-- Apply options so that dragging windows and stuff works
 		local corneOptions = merge_into(opts, deviceSpecifier)
-		hl.bind("SUPER + " .. bind.key[1], command, corneOptions)
+
+		-- Prevent binding keys multiple times if its already bound
+		if subMod ~= "SUPER + " then
+			hl.bind("SUPER + " .. bind.key[1], command, corneOptions)
+		end
 	end
 end
 
