@@ -24,6 +24,32 @@ hl.config({
 	},
 })
 
+-- Config for hyprgrass
+hl.config({
+	plugin = {
+		hyprgrass = {
+			-- The default sensitivity is probably too low on tablet screens,
+			-- I recommend turning it up to 4.0
+			sensitivity = 2.0,
+
+			-- in milliseconds
+			long_press_delay = 400,
+
+			-- resize windows by long-pressing on window borders and gaps.
+			-- If general:resize_on_border is enabled, general:extend_border_grab_area is
+			-- used for floating windows
+			resize_on_border_long_press = true,
+
+			-- in pixels, the distance from the edge that is considered an edge
+			edge_margin = 10,
+		},
+	},
+	gestures = {
+		workspace_swipe_touch = true,
+		workspace_swipe_cancel_ratio = 0.15,
+	},
+})
+
 if Hostname == "mobile02" or Hostname == "mobile03" then
 	hl.config({
 		input = { -- If on laptop make caps the escape key but make it be capslock when shift caps is pressed
