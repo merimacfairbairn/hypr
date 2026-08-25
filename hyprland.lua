@@ -14,7 +14,7 @@ end
 
 -- Check if the plugin module is present
 -- If it is, require it
-local ok, err = pcall(require, "plugins")
+local ok, err = pcall(dofile, "plugins")
 if not ok then
 	hl.exec_cmd("notify-send 'Lua error' '" .. tostring(err) .. "'")
 end
