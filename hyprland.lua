@@ -12,5 +12,9 @@ if handle then
 	end
 end
 
+-- Check if the plugin module is present
+-- If it is, require it
+pcall(require, "plugins")
+
 -- Import everything else
 require("autoload")
