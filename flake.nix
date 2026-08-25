@@ -83,6 +83,7 @@
         runtimePackages = defaultRuntimePkgs;
         exePath = pkgs.lib.getExe hypr;
         env."MODULES_ROOT" = ./modules;
+        env."HYPRLAND_ROOT" = ./.;
         flags."--config" = ./hyprland.lua;
       };
       repo-files = pkgs.stdenvNoCC.mkDerivation {
