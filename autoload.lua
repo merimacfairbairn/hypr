@@ -16,7 +16,7 @@ else
 	modules = os.getenv("HOME") .. "/.config/hypr/modules"
 end
 
-local pluginsOk, pluginsErr = pcall(dofile, hyprRoot .. "plugins.lua")
+local pluginsOk, pluginsErr = pcall(dofile, hyprRoot .. "/plugins.lua")
 if not pluginsOk then
 	hl.notification.create({
 		text = "autoload: " .. hyprRoot .. "plugins.lua" .. "\n" .. tostring(pluginsErr),
