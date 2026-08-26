@@ -1,66 +1,53 @@
--- Config for hyprgrass
+-- If hyprgrass is present
 if hl.plugin.hyprgrass ~= nil then
 	hl.config({
 		plugin = {
 			hyprgrass = {
-				-- The default sensitivity is probably too low on tablet screens,
-				-- I recommend turning it up to 4.0
 				sensitivity = 4.0,
-
-				-- in milliseconds
 				long_press_delay = 400,
-
-				-- resize windows by long-pressing on window borders and gaps.
-				-- If general:resize_on_border is enabled, general:extend_border_grab_area is
-				-- used for floating windows
 				resize_on_border_long_press = true,
-
-				-- in pixels, the distance from the edge that is considered an edge
-				edge_margin = 10,
+				edge_margin = 20,
 			},
 		},
 		gestures = {
-			workspace_swipe_touch = true,
+			-- Disable buggy hyprland gestures
+			workspace_swipe_touch = false,
 			workspace_swipe_cancel_ratio = 0.15,
 		},
 	})
-	hl.gesture({
-		fingers = 3,
-		direction = "horizontal",
-		action = "workspace",
-	})
 
-	hl.notification.create({
-		text = "not using main config",
-		timeout = 8000,
-		icon = "warning",
-	})
+	-- Float and drag windows using 3 fingers
 	hl.plugin.hyprgrass.bind({
 		pattern = { kind = "tap", fingers = 3 },
 		action = hl.dsp.window.float(),
 	})
 	hl.plugin.hyprgrass.bind({
-		pattern = { kind = "longpress", fingers = 3 },
+		pattern = { kind = "longpress", fingers = 2 },
 		action = hl.dsp.window.drag(),
 		mouse = true,
 	})
-	hl.plugin.hyprgrass.gesture({
-		pattern = { kind = "swipe", fingers = 2, direction = "vertical" },
-		action = "emulate_touchpad",
-		emulate_fingers = 2,
+
+	-- Swipe top edge to change workspace
+	hl.plugin.hyprgrass.bind({
+		pattern = { kind = "edge", origin = "t", direction = "l" },
+		action = hl.dsp.focus({ workspace = "+1" }),
 	})
+	hl.plugin.hyprgrass.bind({
+		pattern = { kind = "edge", origin = "t", direction = "r" },
+		action = hl.dsp.focus({ workspace = "-1" }),
+	})
+	hl.plugin.hyprgrass.bind({
+		pattern = { kind = "edge", origin = "b", direction = "u" },
+		action = hl.dsp.exec_cmd("wvkbd-mobintl"),
+	})
+
+	-- Tablet mode toggle
 	hl.bind("switch:on:Intel HID switches", function()
-		hl.notification.create({
-			text = "tablet mode on",
-			timeout = 8000,
-			icon = "ok",
-		})
+		hl.exec_cmd("pkill way-edges")
+		hl.exec_cmd("quickshell ipc call root enableTabletMode")
 	end, { locked = true })
 	hl.bind("switch:off:Intel HID switches", function()
-		hl.notification.create({
-			text = "tablet mode off",
-			timeout = 8000,
-			icon = "ok",
-		})
+		hl.exec_cmd("way-edges")
+		hl.exec_cmd("quickshell ipc call root disableTabletMode")
 	end, { locked = true })
 end
