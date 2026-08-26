@@ -46,7 +46,7 @@
         quickshell
         way-edges
         waybar
-        dunst
+        kando
         ;
       otter-launcher = input {package = "otter-launcher";};
       wshowkeys = input {package = "wshowkeys";};
