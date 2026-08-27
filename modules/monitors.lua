@@ -1,21 +1,21 @@
 if Hostname == "HACKSTATION" then
 	hl.monitor({
 		output = "DP-1",
-		position = "0x0",
+		position = "1920x1080",
 		mode = "1920x1080@60",
 		scale = "1",
 	})
 
 	hl.monitor({
 		output = "DP-2",
-		position = "1920x0",
+		position = "3840x0",
 		mode = "1920x1080@60",
 		scale = "1",
 	})
 
 	hl.monitor({
 		output = "HDMI-A-1",
-		position = "-1920x0",
+		position = "0x0",
 		mode = "1920x1080@60",
 		scale = "1",
 	})
