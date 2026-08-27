@@ -16,14 +16,19 @@ else
 	modules = os.getenv("HOME") .. "/.config/hypr/modules"
 end
 
-local pluginsOk, pluginsErr = pcall(dofile, hyprRoot .. "/plugins.lua")
-if not pluginsOk then
-	hl.notification.create({
-		text = "autoload: " .. hyprRoot .. "plugins.lua" .. "\n" .. tostring(pluginsErr),
-		timeout = 8000,
-		icon = "warning",
-	})
+local function importRelativeModule(module)
+	local ok, err = pcall(dofile, hyprRoot .. "/" .. module)
+	if not ok then
+		hl.notification.create({
+			text = "autoload: " .. hyprRoot .. module .. "\n" .. tostring(err),
+			timeout = 8000,
+			icon = "warning",
+		})
+	end
 end
+
+importRelativeModule("plugins.lua")
+importRelativeModule("runtime.lua")
 
 -- Get all files in modules dir
 local p = io.popen('find -L "' .. modules .. '" -name "*.lua" -type f | sort')
