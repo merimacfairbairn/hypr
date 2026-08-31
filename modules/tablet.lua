@@ -6,7 +6,7 @@ if hl.plugin.hyprgrass ~= nil then
 				sensitivity = 4.0,
 				long_press_delay = 400,
 				resize_on_border_long_press = true,
-				edge_margin = 20,
+				edge_margin = 30,
 			},
 		},
 		gestures = {
@@ -38,7 +38,13 @@ if hl.plugin.hyprgrass ~= nil then
 	})
 	hl.plugin.hyprgrass.bind({
 		pattern = { kind = "edge", origin = "b", direction = "u" },
-		action = hl.dsp.exec_cmd("wvkbd-mobintl"),
+		action = hl.dsp.exec_cmd(
+			'wvkbd-mobintl -L 370 --fn "FiraMono Nerd Font 15" --bg 1e1e2e --fg 313244 --fg-sp 585b70 --text cdd6f4 --text-sp cdd6f4 --press cba6f7 --press-sp b4befe'
+		),
+	})
+	hl.plugin.hyprgrass.bind({
+		pattern = { kind = "edge", origin = "l", direction = "d" },
+		action = hl.dsp.exec_cmd("pkill wvkbd"),
 	})
 
 	-- Tablet mode toggle
