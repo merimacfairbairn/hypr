@@ -36,6 +36,8 @@ if hl.plugin.hyprgrass ~= nil then
 		pattern = { kind = "edge", origin = "t", direction = "r" },
 		action = hl.dsp.focus({ workspace = "-1" }),
 	})
+
+	-- Binds to control keyboard
 	hl.plugin.hyprgrass.bind({
 		pattern = { kind = "edge", origin = "b", direction = "u" },
 		action = hl.dsp.exec_cmd(
@@ -45,6 +47,20 @@ if hl.plugin.hyprgrass ~= nil then
 	hl.plugin.hyprgrass.bind({
 		pattern = { kind = "edge", origin = "l", direction = "d" },
 		action = hl.dsp.exec_cmd("pkill wvkbd"),
+	})
+
+	-- Binds for moving and closing windows
+	hl.plugin.hyprgrass.bind({
+		pattern = { kind = "edge", origin = "b", direction = "r" },
+		action = hl.dsp.layout("move -col"),
+	})
+	hl.plugin.hyprgrass.bind({
+		pattern = { kind = "edge", origin = "b", direction = "l" },
+		action = hl.dsp.layout("move +col"),
+	})
+	hl.plugin.hyprgrass.bind({
+		pattern = { kind = "edge", origin = "r", direction = "d" },
+		action = hl.dsp.window.close(),
 	})
 
 	-- Tablet mode toggle
