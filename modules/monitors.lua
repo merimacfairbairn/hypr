@@ -1,7 +1,7 @@
 if Hostname == "HACKSTATION" then
 	hl.monitor({
 		output = "DP-1",
-		position = "1920x1080",
+		position = "1920x0",
 		mode = "1920x1080@60",
 		scale = "1",
 	})
