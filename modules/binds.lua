@@ -135,7 +135,7 @@ local globalAppBinds = {
 			if recordingMode == 0 then
 				recordingMode = 1
 				hl.exec_cmd(
-					"wshowkeys -a right -F 'FiraMono Nerd Font 35' -s '#cba6f7ff' -f  '#cdd6f4ff' -b '#45475a99' -m 70 -l 60 -t 1000 -a top"
+					"wshowkeys -a right -F 'FiraMono Nerd Font 35' -s '#cba6f7ff' -f  '#cdd6f4ff' -b '#45475a99' -m 70 -l 500 -t 1000 -a top"
 				)
 				notif("Recording Mode Enabled")
 			else
