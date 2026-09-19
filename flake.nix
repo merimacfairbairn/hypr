@@ -46,7 +46,7 @@
         quickshell
         way-edges
         waybar
-        kando
+        wl-clipboard
         ;
       otter-launcher = input {package = "otter-launcher";};
       wshowkeys = input {package = "wshowkeys";};
