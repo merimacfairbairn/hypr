@@ -162,13 +162,18 @@ local globalAppBinds = {
 	{ mod = subMod, key = { "SHIFT + s" }, dispatch = "grimblast copy area" },
 
 	-- Mouse for moving windows
-	{ mod = subMod, key = { "mouse:272" }, dispatch = hl.dsp.window.drag(), opts = { mouse = true, drag = true } },
-	{ mod = subMod, key = { "mouse:272" }, dispatch = hl.dsp.window.float(), opts = { mouse = true, click = true } },
+	{ mod = subMod, key = { "mouse:272" }, dispatch = hl.dsp.window.drag(), opts = { mouse = true } },
+	{
+		mod = subMod,
+		key = { "mouse:272" },
+		dispatch = hl.dsp.window.float(),
+		opts = { transparent = true, click = true },
+	},
 	{
 		mod = subMod,
 		key = { "mouse:272" },
 		dispatch = hl.dsp.layout("promote"),
-		opts = { mouse = true, release = true },
+		opts = { transparent = true, release = true },
 	},
 	{ mod = subMod, key = { "SHIFT + mouse:272" }, dispatch = hl.dsp.window.resize(), opts = { mouse = true } },
 }

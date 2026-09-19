@@ -22,8 +22,10 @@ hl.config({
 		warp_on_toggle_special = 1, -- Go to special workspaces too
 		persistent_warps = true, -- Go back to where it was when I warp
 	},
+	binds = {
+		drag_threshold = 10,
+	},
 })
-
 
 if Hostname == "mobile02" or Hostname == "mobile03" then
 	hl.config({
