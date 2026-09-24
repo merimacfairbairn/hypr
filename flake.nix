@@ -46,7 +46,6 @@
         quickshell
         way-edges
         waybar
-        wl-clipboard
         ;
       otter-launcher = input {package = "otter-launcher";};
       wshowkeys = input {package = "wshowkeys";};
