@@ -1,8 +1,6 @@
 -- Size for otter launcher
 local otterSize = { 410, 220 }
-if Hostname == "mobile02" then
-	otterSize = { 420, 220 }
-end
+
 hl.window_rule({
 	name = "otter-launcher",
 	match = {
@@ -65,24 +63,8 @@ hl.window_rule({
 	animation = "slide top",
 })
 
-hl.window_rule({
-	name = "woomer no anim",
-	match = {
-		title = "woomer",
-	},
-	no_anim = true,
-})
-
 local musicSides = 400
 local musicBottom = 400
-
-if Hostname == "mobile02" then
-	musicSides = 300
-	musicBottom = 300
-elseif Hostname == "mobile03" then
-	musicSides = 200
-	musicBottom = 250
-end
 
 -- Define gaps for music workspace
 hl.workspace_rule({

@@ -1,4 +1,6 @@
-if Hostname == "HACKSTATION" then
+if Hostname == "hummingbird" then
+	hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1.2" })
+else
 	hl.monitor({
 		output = "DP-1",
 		position = "1920x0",
@@ -24,8 +26,4 @@ if Hostname == "HACKSTATION" then
 	hl.workspace_rule({ workspace = "4", monitor = "DP-1" })
 	hl.workspace_rule({ workspace = "2", monitor = "HDMI-A-1" })
 	hl.workspace_rule({ workspace = "3", monitor = "DP-2" })
-elseif Hostname == "mobile03" then
-	hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1.33" })
-else
-	hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1.2" })
 end
