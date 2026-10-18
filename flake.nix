@@ -3,115 +3,98 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    wrapper-modules = {
-      url = "github:nix-community/nix-wrapper-modules";
-    };
-
+    hyprland.url = "github:hyprwm/Hyprland";
+    wrappers.url = "github:lassulus/wrappers";
     otter-launcher = {
       url = "github:kuokuo123/otter-launcher";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     wshowkeys = {
       url = "github:voidarclabs/wshowkeys";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     woomer.url = "github:coffeeispower/woomer";
   };
 
-  outputs = inputs:
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux"];
+  outputs = {
+    self,
+    nixpkgs,
+    wrappers,
+    ...
+  } @ inputs: let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {inherit system;};
+    hypr = inputs.hyprland.packages.${system}.default;
+    defaultRuntimePkgs = let
+      input = {
+        package,
+        output ? "default",
+      }:
+        inputs.${package}.packages.${system}.${output};
+    in {
+      inherit
+        (pkgs)
+        kitty
+        firefox
+        nemo
+        grimblast
+        wpaperd
+        syncthing
+        hyprlock
+        gotify-desktop
+        wayvnc
+        quickshell
+        way-edges
+        waybar
+        ;
+      otter-launcher = input {package = "otter-launcher";};
+      wshowkeys = input {package = "wshowkeys";};
+      woomer = input {package = "woomer";};
+    };
 
-      perSystem = {
-        pkgs,
-        system,
-        ...
-      }: let
-        hypr = inputs.hyprland.packages.${system}.default;
+    mkWrapped = {
+      pkgs,
+      package,
+      runtimePackages,
+      exePath,
+      flags,
+      env,
+    }:
+      (wrappers.lib.wrapPackage {
+        inherit env pkgs package exePath flags;
+      }).overrideAttrs (old: {
+        passthru = (old.passthru or {}) // {inherit runtimePackages;};
+      });
+    repoSrc = pkgs.lib.cleanSourceWith {
+      src = ./.;
+      filter = path: type: let
+        name = baseNameOf path;
+      in
+        !(name == ".git" || name == ".gitignore" || name == "result" || name == ".direnv");
+    };
+  in {
+    lib.defaultRuntimePkgs.${system} = defaultRuntimePkgs;
 
-        externalPackage = name:
-          inputs.${name}.packages.${system}.default;
-
-        runtimePackages = {
-          inherit
-            (pkgs)
-            kitty
-            firefox
-            nemo
-            grimblast
-            wpaperd
-            syncthing
-            hyprlock
-            wayvnc
-            quickshell
-            way-edges
-            waybar
-            ;
-
-          otter-launcher = externalPackage "otter-launcher";
-          wshowkeys = externalPackage "wshowkeys";
-          woomer = externalPackage "woomer";
-        };
-
-        wrappedHyprland = inputs.wrapper-modules.lib.wrapPackage {
-          inherit pkgs;
-
-          package = hypr;
-
-          env = {
-            MODULES_ROOT = ./modules;
-            HYPRLAND_ROOT = ./.;
-          };
-
-          flags = {
-            "--config" = ./hyprland.lua;
-          };
-
-          passthru.runtimePackages = runtimePackages;
-        };
-
-        repoSrc = pkgs.lib.cleanSourceWith {
-          src = ./.;
-          filter = path: type: let
-            name = builtins.baseNameOf path;
-          in
-            !(builtins.elem name [
-              ".git"
-              ".gitignore"
-              "result"
-              ".direnv"
-            ]);
-        };
-
-        repoFiles = pkgs.stdenvNoCC.mkDerivation {
-          pname = "hyprland-repo-files";
-          version = "1.0";
-          src = repoSrc;
-          dontBuild = true;
-
-          installPhase = ''
-            mkdir -p "$out"
-            cp -r . "$out/"
-          '';
-        };
-      in {
-        packages = {
-          default = wrappedHyprland;
-          repo-files = repoFiles;
-        };
-
-        # Retains original public runtime-package output.
-        lib.defaultRuntimePkgs = runtimePackages;
+    packages.${system} = {
+      default = pkgs.lib.makeOverridable mkWrapped {
+        inherit pkgs;
+        package = hypr;
+        runtimePackages = defaultRuntimePkgs;
+        exePath = pkgs.lib.getExe hypr;
+        env."MODULES_ROOT" = ./modules;
+        env."HYPRLAND_ROOT" = ./.;
+        flags."--config" = ./hyprland.lua;
+      };
+      repo-files = pkgs.stdenvNoCC.mkDerivation {
+        pname = "hyprland-repo-files";
+        version = "1.0";
+        src = repoSrc;
+        dontBuild = true;
+        installPhase = ''
+          mkdir -p $out
+          cp -r . $out/
+        '';
       };
     };
+  };
 }
