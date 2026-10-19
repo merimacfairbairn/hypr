@@ -42,6 +42,7 @@
       ];
 
       perSystem = {
+        system,
         inputs',
         pkgs,
         ...
@@ -64,7 +65,17 @@
           inputs'.packages.wshowkeys.default
           inputs'.packages.woomer.default
         ];
+
+        repoSrc = pkgs.lib.cleanSourceWith {
+          src = ./.;
+          filter = path: type: let
+            name = baseNameOf path;
+          in
+            !(name == ".git" || name == ".gitignore" || name == "result" || name == ".direnv");
+        };
       in {
+        lib.defaultRuntimePkgs.${system} = runtimePkgs;
+
         packages = {
           default = inputs.wrappers.wrappers.hyprland.wrap {
             inherit pkgs runtimePkgs;
@@ -74,6 +85,17 @@
             env."MODULES_ROOT" = ./modules;
             env."HYPRLAND_ROOT" = ./.;
             flags."--config" = ./hyprland.lua;
+          };
+
+          repo-files = pkgs.stdenvNoCC.mkDerivation {
+            pname = "hyprland-repo-files";
+            version = "1.0";
+            src = repoSrc;
+            dontBuild = true;
+            installPhase = ''
+              mkdir -p $out
+              cp -r . $out/
+            '';
           };
         };
       };
