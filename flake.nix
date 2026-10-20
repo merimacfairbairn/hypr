@@ -81,7 +81,7 @@
 
             env."MODULES_ROOT" = ./modules;
             env."HYPRLAND_ROOT" = ./.;
-            flags."--config" = ./hyprland.lua;
+            configFile = ./hyprland.lua;
           };
 
           repo-files = pkgs.stdenvNoCC.mkDerivation {
