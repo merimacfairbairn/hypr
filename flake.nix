@@ -61,9 +61,9 @@
           way-edges
           waybar
 
-          inputs'.packages.otter-launcher.default
-          inputs'.packages.wshowkeys.default
-          inputs'.packages.woomer.default
+          inputs'.otter-launcher.packages.default
+          inputs'.wshowkeys.packages.default
+          inputs'.woomer.packages.default
         ];
 
         repoSrc = pkgs.lib.cleanSourceWith {
