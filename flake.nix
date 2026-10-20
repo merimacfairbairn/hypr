@@ -42,7 +42,6 @@
       ];
 
       perSystem = {
-        system,
         inputs',
         pkgs,
         ...
@@ -74,8 +73,6 @@
             !(name == ".git" || name == ".gitignore" || name == "result" || name == ".direnv");
         };
       in {
-        lib.defaultRuntimePkgs.${system} = runtimePkgs;
-
         packages = {
           default = inputs.wrappers.wrappers.hyprland.wrap {
             inherit pkgs runtimePkgs;
