@@ -77,8 +77,8 @@
           default = inputs.wrappers.wrappers.hyprland.wrap {
             inherit pkgs runtimePkgs;
 
-            package = inputs'.package.hyprland.default;
-            exePath = pkgs.lib.getExe inputs'.package.hyprland.default;
+            package = inputs'.hyprland.packages.default;
+
             env."MODULES_ROOT" = ./modules;
             env."HYPRLAND_ROOT" = ./.;
             flags."--config" = ./hyprland.lua;
