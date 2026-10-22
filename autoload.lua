@@ -1,34 +1,4 @@
--- ~/.config/hypr/autoload.lua
-
--- Path to search
-local hyprRoot
-local modules
-
-if os.getenv("HYPRLAND_ROOT") then
-	hyprRoot = os.getenv("HYPRLAND_ROOT")
-else
-	hyprRoot = os.getenv("HOME") .. "/.config/hypr"
-end
-
-if os.getenv("MODULES_ROOT") then
-	modules = os.getenv("MODULES_ROOT")
-else
-	modules = os.getenv("HOME") .. "/.config/hypr/modules"
-end
-
-local function importRelativeModule(module)
-	local ok, err = pcall(dofile, hyprRoot .. "/" .. module)
-	if not ok then
-		hl.notification.create({
-			text = "autoload: " .. hyprRoot .. module .. "\n" .. tostring(err),
-			timeout = 8000,
-			icon = "warning",
-		})
-	end
-end
-
-importRelativeModule("plugins.lua")
-importRelativeModule("runtime.lua")
+local modules = os.getenv("MODULES_ROOT") or (os.getenv("HOME") .. "/.config/hypr/modules")
 
 -- Get all files in modules dir
 local p = io.popen('find -L "' .. modules .. '" -name "*.lua" -type f | sort')
