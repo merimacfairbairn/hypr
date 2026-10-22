@@ -1,8 +1,7 @@
 local appList = {
 	"wpaperd -d",
-	-- "syncthing -home=/home/user01/.config/syncthing -no-browser",
-	-- 'sleep 5 && curl -X POST -H "Content-Type: application/json" -d "{\\"ref\\":\\"$(git -C ~/.dotfiles rev-parse HEAD)\\", \\"status\\":\\"$(git -C ~/.dotfiles diff --quiet && echo "clean" || echo "dirty")\\"}" http://192.168.1.180:5678/webhook/config-checker',
-	-- "quickshell",
+	"quickshell",
+	-- "syncthing -home=/home/aboba/.config/syncthing -no-browser",
 }
 
 local localAppList
