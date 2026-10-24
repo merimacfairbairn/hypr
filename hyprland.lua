@@ -9,5 +9,5 @@ end
 local root = os.getenv("HYPRLAND_ROOT") or (os.getenv("HOME") .. "/.config/hypr")
 local ok, err = pcall(dofile, root .. "/autoload.lua")
 if not ok then
-  hl.notification.create({ text = "autoload: " .. tostring(err), timeout = 8000, icon = "warning" })
+	hl.notification.create({ text = "autoload: " .. tostring(err), timeout = 8000, icon = "warning" })
 end

@@ -1,5 +1,5 @@
 -- Import catppuccin colors
-local ctp = require("modules.mocha")
+local ctp = require("_mocha")
 hl.config({
 
 	-- gaps and colors

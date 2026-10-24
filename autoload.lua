@@ -1,4 +1,9 @@
 local modules = os.getenv("MODULES_ROOT") or (os.getenv("HOME") .. "/.config/hypr/modules")
+package.path = table.concat({
+	modules .. "/?.lua",
+	modules .. "/?/init.lua",
+	package.path,
+}, ";")
 
 -- Get all files in modules dir
 local p = io.popen('find -L "' .. modules .. '" -name "*.lua" -type f | sort')
