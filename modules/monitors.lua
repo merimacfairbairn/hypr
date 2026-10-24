@@ -1,5 +1,5 @@
 if Hostname == "hummingbird" then
-	hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1.2" })
+	hl.monitor({ output = "", mode = "preferred", position = "auto", scale = "1" })
 else
 	hl.monitor({
 		output = "DP-1",
