@@ -1,7 +1,7 @@
 local appList = {
 	"wpaperd -d",
 	"quickshell",
-	-- "syncthing -home=/home/aboba/.config/syncthing -no-browser",
+	"syncthing -home=/home/aboba/.config/syncthing -no-browser",
 }
 
 local localAppList
