@@ -69,7 +69,9 @@ local globalAppBinds = {
 			if hl.get_windows({ class = "otter" })[1] ~= nil then
 				hl.dispatch(hl.dsp.focus({ window = "class:otter" }))
 			else
-				hl.exec_cmd("kitty --class otter --title otter-launcher -e sh -c 'sleep 0.05 && otter-launcher'")
+				hl.exec_cmd(
+					"kitty --class otter --title otter-launcher -o remember_window_size=no -e sh -c 'sleep 0.05 && otter-launcher'"
+				)
 			end
 		end,
 	},
