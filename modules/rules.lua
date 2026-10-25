@@ -101,15 +101,6 @@ hl.window_rule({
 	no_focus = true,
 })
 
--- Wlogout blur and stuff
-hl.layer_rule({
-	name = "wlogout blur",
-	match = {
-		namespace = "logout_dialog",
-	},
-	blur = true,
-})
-
 -- Notifications
 hl.layer_rule({
 	name = "notification blur",
