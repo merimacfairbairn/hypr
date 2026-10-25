@@ -37,7 +37,8 @@ local function merge_into(first, second)
 	return combined
 end
 
-local corneKeyboardString = "qwertyuiop"
+local corneKeyboardString = "1234567890"
+local qwertyString = "qwertyuiop"
 
 -- Set modifier keys
 local mainMod = "SUPER + "
@@ -48,9 +49,9 @@ local recordingMode = 0
 
 -- Set different modifiers on laptops
 if string.find(Hostname, "mobile") ~= nil then
-	mainMod = "ALT + "
-	subMod = "SUPER + "
-	keyboardString = "1234567890"
+	-- mainMod = "ALT + "
+	-- subMod = "SUPER + "
+	keyboardString = qwertyString
 	keybindIndex = 2
 end
 
