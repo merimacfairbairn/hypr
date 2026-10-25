@@ -1,5 +1,5 @@
 -- Size for otter launcher
-local otterSize = { 700, 400 }
+local otterSize = { 410, 220 }
 
 hl.window_rule({
 	name = "otter-launcher",
