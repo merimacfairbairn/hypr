@@ -45,7 +45,6 @@ local mainMod = "SUPER + "
 local subMod = mainMod
 local keyboardString = corneKeyboardString
 local keybindIndex = 1
-local recordingMode = 0
 
 -- Set different modifiers on laptops
 if string.find(Hostname, "mobile") ~= nil then
@@ -59,7 +58,7 @@ local globalAppBinds = {
 
 	---- Window functions
 	{ key = { "BACKSPACE" }, dispatch = hl.dsp.window.close() },
-	{ key = { "b", "f" }, dispatch = hl.dsp.window.fullscreen({ action = "toggle" }) },
+	{ key = { "b" }, dispatch = hl.dsp.window.fullscreen({ action = "toggle" }) },
 	{ mod = subMod, key = { "space" }, dispatch = hl.dsp.window.float() },
 
 	---- Apps
@@ -81,11 +80,7 @@ local globalAppBinds = {
 	{
 		key = { "RETURN" },
 		dispatch = function()
-			if recordingMode == 1 then
-				hl.exec_cmd("kitty -o font_size=24 -o window_margin_width=20")
-			else
-				hl.exec_cmd("kitty")
-			end
+			hl.exec_cmd("kitty")
 		end,
 	},
 
@@ -130,33 +125,6 @@ local globalAppBinds = {
 	{ key = { "m" }, dispatch = hl.dsp.workspace.toggle_special("music") },
 	{ key = { "minus" }, dispatch = hl.dsp.workspace.toggle_special("scratch") },
 	{ key = { "SHIFT + minus" }, dispatch = hl.dsp.window.move({ workspace = "special:scratch", follow = false }) },
-
-	-- Youtuber mode lol
-	{
-		key = { "z" },
-		dispatch = function()
-			if recordingMode == 0 then
-				recordingMode = 1
-				hl.exec_cmd(
-					"wshowkeys -a right -F 'FiraMono Nerd Font 35' -s '#cba6f7ff' -f  '#cdd6f4ff' -b '#45475a99' -m 70 -l 500 -t 1000 -a top"
-				)
-				notif("Recording Mode Enabled")
-			else
-				recordingMode = 0
-				hl.exec_cmd("pkill wshowkeys")
-				notif("Recording Mode Disabled")
-			end
-		end,
-	},
-
-	{
-		key = { "x" },
-		dispatch = function()
-			if recordingMode == 1 then
-				hl.exec_cmd("woomer --output DP-1 --radius 2 --monitor DP-1 -S")
-			end
-		end,
-	},
 
 	-- Logout menu
 	{ key = { "a", "e" }, dispatch = "quickshell ipc call root openLogoutMenu" },
