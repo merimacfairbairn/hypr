@@ -12,14 +12,11 @@ local laptopApplist = {
 	"way-edges",
 }
 
-if Hostname == "HACKSTATION" then
+if string.find(Hostname, "station") ~= nil then
 	-- If on desktop do desktop things
 	localAppList = desktopAppList
-elseif Hostname == "mobile02" then
+elseif string.find(Hostname, "mobile") ~= nil then
 	-- If on laptop, do laptop things
-	localAppList = laptopApplist
-elseif Hostname == "mobile03" then
-	-- If on other laptop, do other laptop things
 	localAppList = laptopApplist
 else
 	-- Prevents null errors

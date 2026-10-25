@@ -27,7 +27,7 @@ hl.config({
 	},
 })
 
-if Hostname == "hummingbird" then
+if string.find(Hostname, "mobile") ~= nil then
 	hl.config({
 		input = { -- If on laptop make caps the escape key but make it be capslock when shift caps is pressed
 			kb_options = "caps:escape_shifted_capslock",
