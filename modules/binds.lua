@@ -85,7 +85,7 @@ local globalAppBinds = {
 	},
 
 	-- Firefox and file browser
-	{ key = { "f", "o" }, dispatch = "firefox" },
+	{ key = { "f" }, dispatch = "firefox" },
 	{ key = { "s" }, dispatch = "nemo" },
 
 	---- Move windows
@@ -127,7 +127,7 @@ local globalAppBinds = {
 	{ key = { "SHIFT + minus" }, dispatch = hl.dsp.window.move({ workspace = "special:scratch", follow = false }) },
 
 	-- Logout menu
-	{ key = { "a", "e" }, dispatch = "quickshell ipc call root openLogoutMenu" },
+	{ key = { "a" }, dispatch = "quickshell ipc call root openLogoutMenu" },
 
 	-- Screenshot
 	{ mod = subMod, key = { "SHIFT + s" }, dispatch = "grimblast copy area" },
